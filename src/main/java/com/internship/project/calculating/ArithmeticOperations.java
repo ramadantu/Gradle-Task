@@ -36,19 +36,19 @@ public class ArithmeticOperations {
     public String apply(int firstOperand, int secondOperand, String operator) {
 
         switch (operator) {
-            case "+" -> {
+            case "+": {
                 return Operation.ADDITION.calculate(firstOperand, secondOperand);
             }
-            case "-" -> {
+            case "-": {
                 return Operation.SUBTRACTION.calculate(firstOperand, secondOperand);
             }
-            case "*" -> {
+            case "*": {
                 return Operation.MULTIPLICATION.calculate(firstOperand, secondOperand);
             }
-            case "/" -> {
+            case "/": {
                 return Operation.DIVISION.calculate(firstOperand, secondOperand);
             }
-            default -> {
+            default: {
                 return "Choose a valid operator! \n";
             }
         }
