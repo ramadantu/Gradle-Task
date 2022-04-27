@@ -42,9 +42,9 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Unit Test Results
-        path: "src/test/**/*.java"
+        path: "src/test/**/*.xml"
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1
       if: always()
       with:
-        files: "src/test/**/*.java"
+        files: "src/test/**/*.xml"
