@@ -12,7 +12,7 @@ class RpnCalculatorTest {
 
     @Test
     @DisplayName("Checking for correctly done RPN calculation!")
-    void shouldCorrectlyCalculateRPN() {
+    void givenExpressionInRPN_whenCallCalculateMethod_thenSuccess() {
 
         RpnCalculator calculator = new RpnCalculator();
         Queue<String> rpnQueue = new LinkedList<>();

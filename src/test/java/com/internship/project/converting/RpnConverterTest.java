@@ -12,7 +12,7 @@ class RpnConverterTest {
 
     @Test
     @DisplayName("Checking for correctly RPN converting!")
-    void shouldConvertCorrectlyToRPN() {
+    void givenExpressionInInfixNotation_whenCallConvertMethod_thenSuccess() {
 
         RpnConverter converter = new RpnConverter();
         Queue<String> inputQueue = new LinkedList<>();

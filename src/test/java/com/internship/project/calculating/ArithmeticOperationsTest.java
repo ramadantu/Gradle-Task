@@ -9,7 +9,7 @@ class ArithmeticOperationsTest {
 
     @Test
     @DisplayName("Checking for correctly done addition!")
-    void shouldCalculateCorrectlyAddition() {
+    void givenExpressionWithAddition_whenCallCalculatorApplyMethod_thenSuccess() {
 
         ArithmeticOperations calculator = new ArithmeticOperations();
         int firstOperand = 3;
@@ -25,7 +25,7 @@ class ArithmeticOperationsTest {
 
     @Test
     @DisplayName("Checking for correctly done subtraction!")
-    void shouldCalculateCorrectlySubtraction() {
+    void givenExpressionWithSubtraction_whenCallCalculatorApplyMethod_thenSuccess() {
 
         ArithmeticOperations calculator = new ArithmeticOperations();
         int firstOperand = 3;
@@ -41,7 +41,7 @@ class ArithmeticOperationsTest {
 
     @Test
     @DisplayName("Checking for correctly done multiplication!")
-    void shouldCalculateCorrectlyMultiplication() {
+    void givenExpressionWithMultiplication_whenCallCalculatorApplyMethod_thenSuccess() {
 
         ArithmeticOperations calculator = new ArithmeticOperations();
         int firstOperand = 3;
@@ -57,7 +57,7 @@ class ArithmeticOperationsTest {
 
     @Test
     @DisplayName("Checking for correctly done division!")
-    void shouldCalculateCorrectlyDivision() {
+    void givenExpressionWithDivision_whenCallCalculatorApplyMethod_thenSuccess() {
 
         ArithmeticOperations calculator = new ArithmeticOperations();
         int firstOperand = 6;
