@@ -3,6 +3,7 @@ package com.internship.project.calculating;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -16,16 +17,7 @@ class RpnCalculatorTest {
 
         RpnCalculator calculator = new RpnCalculator();
         Queue<String> rpnQueue = new LinkedList<>();
-        rpnQueue.add("45");
-        rpnQueue.add("34");
-        rpnQueue.add("-");
-        rpnQueue.add("2");
-        rpnQueue.add("*");
-        rpnQueue.add("6");
-        rpnQueue.add("+");
-        rpnQueue.add("7");
-        rpnQueue.add("/");
-        rpnQueue.add("=");
+        Collections.addAll(rpnQueue,"45,34,-,2,*,6,+,7,/,=".split(","));
         Queue<String> expectedResult = new LinkedList<>();
         expectedResult.add("4.0");
 

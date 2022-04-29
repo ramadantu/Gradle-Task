@@ -3,6 +3,8 @@ package com.internship.project.converting;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -16,27 +18,9 @@ class RpnConverterTest {
 
         RpnConverter converter = new RpnConverter();
         Queue<String> inputQueue = new LinkedList<>();
-        inputQueue.add("45");
-        inputQueue.add("-");
-        inputQueue.add("34");
-        inputQueue.add("*");
-        inputQueue.add("2");
-        inputQueue.add("+");
-        inputQueue.add("6");
-        inputQueue.add("/");
-        inputQueue.add("7");
-        inputQueue.add("=");
+        Collections.addAll(inputQueue,"45,-,34,*,2,+,6,/,7,=".split(","));
         Queue<String> expectedQueue = new LinkedList<>();
-        expectedQueue.add("45");
-        expectedQueue.add("34");
-        expectedQueue.add("-");
-        expectedQueue.add("2");
-        expectedQueue.add("*");
-        expectedQueue.add("6");
-        expectedQueue.add("+");
-        expectedQueue.add("7");
-        expectedQueue.add("/");
-        expectedQueue.add("=");
+        Collections.addAll(expectedQueue,"45,34,-,2,*,6,+,7,/,=".split(","));
 
         Queue<String> actualQueue = converter.convert(inputQueue);
 
