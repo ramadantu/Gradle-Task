@@ -1,5 +1,7 @@
 package com.internship.project.calculating;
 
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,12 +14,10 @@ class ArithmeticOperationsTest {
     void givenExpressionWithAddition_whenCallCalculatorApplyMethod_thenSuccess() {
 
         ArithmeticOperations calculator = new ArithmeticOperations();
-        int firstOperand = 3;
-        int secondOperand = 2;
-        String operator = "+";
+        Expression expression = new ExpressionBuilder("3+2").build();
         String expectedResult = "5";
 
-        String actualResult = calculator.apply(firstOperand, secondOperand, operator);
+        String actualResult = calculator.evaluate(expression);
 
         assertEquals(expectedResult, actualResult);
 
@@ -28,12 +28,10 @@ class ArithmeticOperationsTest {
     void givenExpressionWithSubtraction_whenCallCalculatorApplyMethod_thenSuccess() {
 
         ArithmeticOperations calculator = new ArithmeticOperations();
-        int firstOperand = 3;
-        int secondOperand = 2;
-        String operator = "-";
+        Expression expression = new ExpressionBuilder("3-2").build();
         String expectedResult = "1";
 
-        String actualResult = calculator.apply(firstOperand, secondOperand, operator);
+        String actualResult = calculator.evaluate(expression);
 
         assertEquals(expectedResult, actualResult);
 
@@ -44,12 +42,10 @@ class ArithmeticOperationsTest {
     void givenExpressionWithMultiplication_whenCallCalculatorApplyMethod_thenSuccess() {
 
         ArithmeticOperations calculator = new ArithmeticOperations();
-        int firstOperand = 3;
-        int secondOperand = 2;
-        String operator = "*";
+        Expression expression = new ExpressionBuilder("3*2").build();
         String expectedResult = "6";
 
-        String actualResult = calculator.apply(firstOperand, secondOperand, operator);
+        String actualResult = calculator.evaluate(expression);
 
         assertEquals(expectedResult, actualResult);
 
@@ -60,12 +56,10 @@ class ArithmeticOperationsTest {
     void givenExpressionWithDivision_whenCallCalculatorApplyMethod_thenSuccess() {
 
         ArithmeticOperations calculator = new ArithmeticOperations();
-        int firstOperand = 6;
-        int secondOperand = 2;
-        String operator = "/";
+        Expression expression = new ExpressionBuilder("6/2").build();
         String expectedResult = "3.0";
 
-        String actualResult = calculator.apply(firstOperand, secondOperand, operator);
+        String actualResult = calculator.evaluate(expression);
 
         assertEquals(expectedResult, actualResult);
 

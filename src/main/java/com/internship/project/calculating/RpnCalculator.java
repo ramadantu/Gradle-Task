@@ -1,5 +1,8 @@
 package com.internship.project.calculating;
 
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -26,7 +29,8 @@ public class RpnCalculator {
 
             firstOperand = Integer.parseInt(stack.pop());
             secondOperand = Integer.parseInt(stack.pop());
-            String result = arithmeticOperations.apply(secondOperand, firstOperand, operator);
+            Expression expression = new ExpressionBuilder(firstOperand + operator + secondOperand).build();
+            String result = arithmeticOperations.evaluate(expression);
             stack.push(result);
         }
 
