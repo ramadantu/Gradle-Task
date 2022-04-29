@@ -15,7 +15,7 @@ class ArithmeticOperationsTest {
 
         ArithmeticOperations calculator = new ArithmeticOperations();
         Expression expression = new ExpressionBuilder("3+2").build();
-        String expectedResult = "5";
+        String expectedResult = "5.0";
 
         String actualResult = calculator.evaluate(expression);
 
@@ -29,7 +29,7 @@ class ArithmeticOperationsTest {
 
         ArithmeticOperations calculator = new ArithmeticOperations();
         Expression expression = new ExpressionBuilder("3-2").build();
-        String expectedResult = "1";
+        String expectedResult = "1.0";
 
         String actualResult = calculator.evaluate(expression);
 
@@ -43,7 +43,7 @@ class ArithmeticOperationsTest {
 
         ArithmeticOperations calculator = new ArithmeticOperations();
         Expression expression = new ExpressionBuilder("3*2").build();
-        String expectedResult = "6";
+        String expectedResult = "6.0";
 
         String actualResult = calculator.evaluate(expression);
 
