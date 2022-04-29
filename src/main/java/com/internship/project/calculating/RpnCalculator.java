@@ -13,7 +13,7 @@ public class RpnCalculator {
 
         ArithmeticOperations arithmeticOperations = new ArithmeticOperations();
         Stack<String> stack = new Stack<>();
-        int firstOperand, secondOperand;
+        double firstOperand, secondOperand;
         String operator;
         while (rpnQueue.peek() != null) {
             String token = rpnQueue.remove();
@@ -27,9 +27,9 @@ public class RpnCalculator {
                 operator = token;
             }
 
-            firstOperand = Integer.parseInt(stack.pop());
-            secondOperand = Integer.parseInt(stack.pop());
-            Expression expression = new ExpressionBuilder(firstOperand + operator + secondOperand).build();
+            firstOperand = Double.parseDouble(stack.pop());
+            secondOperand = Double.parseDouble(stack.pop());
+            Expression expression = new ExpressionBuilder(secondOperand + operator + firstOperand).build();
             String result = arithmeticOperations.evaluate(expression);
             stack.push(result);
         }
