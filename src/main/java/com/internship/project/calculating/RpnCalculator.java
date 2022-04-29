@@ -8,7 +8,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class RpnCalculator {
-    public Queue<String> calculate(Queue<String> rpnQueue) {
+    public Queue<String> apply(Queue<String> rpnQueue) {
         Queue<String> results = new LinkedList<>();
 
         ArithmeticOperations arithmeticOperations = new ArithmeticOperations();

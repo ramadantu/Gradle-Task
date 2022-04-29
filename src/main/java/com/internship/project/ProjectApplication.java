@@ -21,7 +21,7 @@ public class ProjectApplication {
         Queue<String> rpnQueue = rpnConverter.convert(inputQueue);
 
         RpnCalculator rpnCalculator = new RpnCalculator();
-        Queue<String> results = rpnCalculator.calculate(rpnQueue);
+        Queue<String> results = rpnCalculator.apply(rpnQueue);
 
         new WritingFile().writingFile(outputQueue, results);
 

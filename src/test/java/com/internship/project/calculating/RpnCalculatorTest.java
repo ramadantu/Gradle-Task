@@ -21,7 +21,7 @@ class RpnCalculatorTest {
         Queue<String> expectedResult = new LinkedList<>();
         expectedResult.add("4.0");
 
-        Queue<String> actualResult = calculator.calculate(rpnQueue);
+        Queue<String> actualResult = calculator.apply(rpnQueue);
 
         assertEquals(expectedResult, actualResult);
 
