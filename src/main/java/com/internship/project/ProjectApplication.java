@@ -1,29 +1,35 @@
 package com.internship.project;
 
-import com.internship.project.calculating.RpnCalculator;
-import com.internship.project.converting.RpnConverter;
-import com.internship.project.reading.ReadingFile;
-import com.internship.project.writing.WritingFile;
+import com.internship.project.calculating.ArithmeticOperations;
 
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.io.*;
+import java.util.Objects;
 
 
 public class ProjectApplication {
     public static void main(String[] args) throws IOException {
 
-        Queue<String> inputQueue = new LinkedList<>();
-        Queue<String> outputQueue = new LinkedList<>();
-        new ReadingFile().readingFile(inputQueue, outputQueue);
+        File outputFile = new File("/src/main/resources/output.txt");
+        FileWriter fileWriter = new FileWriter(outputFile);
 
-        RpnConverter rpnConverter = new RpnConverter();
-        Queue<String> rpnQueue = rpnConverter.convert(inputQueue);
+        try (InputStream input = ProjectApplication.class.getResourceAsStream("/input.txt");
+             BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(input)));
+             fileWriter; BufferedWriter writer = new BufferedWriter(fileWriter)) {
 
-        RpnCalculator rpnCalculator = new RpnCalculator();
-        Queue<String> results = rpnCalculator.apply(rpnQueue);
+            ArithmeticOperations calculator = new ArithmeticOperations();
+            String currentLine;
+            String mathExpression;
+            String result;
 
-        new WritingFile().writingFile(outputQueue, results);
+            while ((currentLine = reader.readLine()) != null) {
+
+                mathExpression = currentLine.substring(0, currentLine.indexOf("="));
+                result = calculator.apply(mathExpression);
+                writer.append(currentLine.replace("?", result + "\n"));
+
+            }
+
+        }
 
     }
 }
