@@ -20,9 +20,9 @@ public class ProjectApplication {
             properties.load(fileInputStream);
 
             String variableName = properties.getProperty("CALC_VAR_NAME");
-            String varriableValue = properties.getProperty("CALC_VAR_VALUE");
+            String variableValue = properties.getProperty("CALC_VAR_VALUE");
 
-            String result = calculator.apply(mathExpression, variableName, varriableValue);
+            String result = calculator.apply(mathExpression, variableName, variableValue);
             System.out.println(inputExpression.replace("?", result));
 
         }
