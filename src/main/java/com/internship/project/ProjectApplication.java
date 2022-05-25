@@ -9,7 +9,7 @@ import java.util.*;
 public class ProjectApplication {
     public static void main(String[] args) throws IOException {
 
-        try (FileInputStream fileInputStream = new FileInputStream("./src/calculator.properties");
+        try (FileInputStream fileInputStream = new FileInputStream("./src/main/resources/calculator.properties");
              Scanner scanner = new Scanner(System.in)) {
 
             ArithmeticOperations calculator = new ArithmeticOperations();
