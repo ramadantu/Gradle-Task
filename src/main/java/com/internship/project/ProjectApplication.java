@@ -2,8 +2,8 @@ package com.internship.project;
 
 import com.internship.project.calculating.ArithmeticOperations;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 public class ProjectApplication {
@@ -12,7 +12,7 @@ public class ProjectApplication {
         final String VAR_NAME = "CALC_VAR_NAME";
         final String VAR_VALUE = "CALC_VAR_VALUE";
 
-        try (FileInputStream fileInputStream = new FileInputStream("./src/main/resources/calculator.properties");
+        try (InputStream inputStream = ClassLoader.getSystemResourceAsStream("calculator.properties");
              Scanner scanner = new Scanner(System.in)) {
 
             ArithmeticOperations calculator = new ArithmeticOperations();
@@ -21,7 +21,7 @@ public class ProjectApplication {
             String result;
 
             Properties properties = new Properties();
-            properties.load(fileInputStream);
+            properties.load(inputStream);
 
             String envVarName = System.getenv(VAR_NAME);
             String envVarValue = System.getenv(VAR_VALUE);
