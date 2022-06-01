@@ -2,23 +2,27 @@ package com.internship.project;
 
 import com.internship.project.calculating.ArithmeticOperations;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 public class ProjectApplication {
+    public static final String VAR_NAME = "CALC_VAR_NAME";
+    public static final String VAR_VALUE = "CALC_VAR_VALUE";
+    public static final String MEM_VALUE = "CALC_MEM_VALUE";
+    public static final String MEM_FILE_FORMAT = "M = %s \n";
+
     public static void main(String[] args) throws IOException {
 
-        final String VAR_NAME = "CALC_VAR_NAME";
-        final String VAR_VALUE = "CALC_VAR_VALUE";
-
-        try (InputStream inputStream = ClassLoader.getSystemResourceAsStream("calculator.properties");
-             Scanner scanner = new Scanner(System.in)) {
+        try (InputStream inputStream = ProjectApplication.class.getResourceAsStream("/calculator.properties");
+             FileReader fileReader = new FileReader("src/main/resources/input.txt");
+             FileWriter fileWriter = new FileWriter("src/main/resources/memory.txt");
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
             ArithmeticOperations calculator = new ArithmeticOperations();
-            String inputExpression = scanner.nextLine();
-            String mathExpression = inputExpression.substring(0, inputExpression.indexOf("="));
-            String result;
+            String inputLine;
+            String leftSideOfExpression;
+            String rightSideOfExpression;
+            String resultOfLeftSide;
 
             Properties properties = new Properties();
             properties.load(inputStream);
@@ -26,22 +30,56 @@ public class ProjectApplication {
             String envVarName = System.getenv(VAR_NAME);
             String envVarValue = System.getenv(VAR_VALUE);
 
-            if (envVarName != null && envVarValue != null) {
-                properties.setProperty(VAR_NAME, envVarName);
-                properties.setProperty(VAR_VALUE, envVarValue);
+            while ((inputLine = bufferedReader.readLine()) != null) {
 
-                String variableName = properties.getProperty(VAR_NAME);
-                String variableValue = properties.getProperty(VAR_VALUE);
+                leftSideOfExpression = inputLine.substring(0, inputLine.indexOf("="));
+                rightSideOfExpression = inputLine.substring(inputLine.indexOf("="));
 
-                result = calculator.apply(mathExpression, variableName, variableValue);
-            } else {
-                result = calculator.apply(mathExpression, null, null);
+                if (envVarName != null && envVarValue != null) {
+                    properties.setProperty(VAR_NAME, envVarName);
+                    properties.setProperty(VAR_VALUE, envVarValue);
+
+                    String variableName = properties.getProperty(VAR_NAME);
+                    String variableValue = properties.getProperty(VAR_VALUE);
+
+                    leftSideOfExpression = replaceMemWithItsValueIfExist(leftSideOfExpression, properties.getProperty(MEM_VALUE));
+                    resultOfLeftSide = calculator.apply(leftSideOfExpression, variableName, variableValue);
+                    System.out.println(leftSideOfExpression + resultOfRightSide(rightSideOfExpression, properties, fileWriter, resultOfLeftSide));
+                } else {
+                    leftSideOfExpression = replaceMemWithItsValueIfExist(leftSideOfExpression, properties.getProperty(MEM_VALUE));
+                    resultOfLeftSide = calculator.apply(leftSideOfExpression, null, null);
+                    System.out.println(leftSideOfExpression + resultOfRightSide(rightSideOfExpression, properties, fileWriter, resultOfLeftSide));
+                }
             }
-            
-            System.out.println(inputExpression.replace("?", result));
-
         }
+    }
 
+    public static String replaceMemWithItsValueIfExist(String expression, String value) {
+        if (expression.contains("M")) {
+            return expression.replace("M", value);
+        }
+        return expression;
+    }
 
+    public static String resultOfRightSide(String rightSideOfExpression, Properties properties, FileWriter fileWriter, String resultOfLeftSide) throws IOException {
+        if (rightSideOfExpression.contains("M+")) {
+            properties.setProperty(
+                    MEM_VALUE,
+                    String.valueOf(Double.parseDouble(properties.getProperty(MEM_VALUE)) + Double.parseDouble(resultOfLeftSide)));
+            fileWriter.append(String.format(MEM_FILE_FORMAT, properties.getProperty(MEM_VALUE)));
+            return rightSideOfExpression.replace("M+", properties.getProperty(MEM_VALUE));
+        } else if (rightSideOfExpression.contains("M-")) {
+            properties.setProperty(
+                    MEM_VALUE,
+                    String.valueOf(Double.parseDouble(properties.getProperty(MEM_VALUE)) - Double.parseDouble(resultOfLeftSide)));
+            fileWriter.append(String.format(MEM_FILE_FORMAT, properties.getProperty(MEM_VALUE)));
+            return rightSideOfExpression.replace("M-", properties.getProperty(MEM_VALUE));
+        } else if (rightSideOfExpression.contains("M")) {
+            properties.setProperty(MEM_VALUE, resultOfLeftSide);
+            fileWriter.append(String.format(MEM_FILE_FORMAT, properties.getProperty(MEM_VALUE)));
+            return rightSideOfExpression.replace("M", properties.getProperty(MEM_VALUE));
+        } else {
+            return rightSideOfExpression.replace("?", resultOfLeftSide);
+        }
     }
 }
