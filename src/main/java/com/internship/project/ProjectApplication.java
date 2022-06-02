@@ -1,6 +1,7 @@
 package com.internship.project;
 
 import com.internship.project.calculating.ArithmeticOperations;
+import com.internship.project.database.DatabaseH2;
 
 import java.io.*;
 import java.util.*;
@@ -17,6 +18,10 @@ public class ProjectApplication {
              FileReader fileReader = new FileReader("src/main/resources/input.txt");
              FileWriter fileWriter = new FileWriter("src/main/resources/memory.txt");
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+
+            DatabaseH2 databaseH2 = new DatabaseH2();
+            databaseH2.deleteTableIfExists();
+            databaseH2.createTable();
 
             ArithmeticOperations calculator = new ArithmeticOperations();
             String inputLine;
@@ -44,13 +49,17 @@ public class ProjectApplication {
 
                     leftSideOfExpression = replaceMemWithItsValueIfExist(leftSideOfExpression, properties.getProperty(MEM_VALUE));
                     resultOfLeftSide = calculator.apply(leftSideOfExpression, variableName, variableValue);
-                    System.out.println(leftSideOfExpression + resultOfRightSide(rightSideOfExpression, properties, fileWriter, resultOfLeftSide));
+                    System.out.println(leftSideOfExpression
+                            + resultOfRightSide(rightSideOfExpression, properties, fileWriter, resultOfLeftSide, databaseH2));
                 } else {
                     leftSideOfExpression = replaceMemWithItsValueIfExist(leftSideOfExpression, properties.getProperty(MEM_VALUE));
                     resultOfLeftSide = calculator.apply(leftSideOfExpression, null, null);
-                    System.out.println(leftSideOfExpression + resultOfRightSide(rightSideOfExpression, properties, fileWriter, resultOfLeftSide));
+                    System.out.println(leftSideOfExpression
+                            + resultOfRightSide(rightSideOfExpression, properties, fileWriter, resultOfLeftSide, databaseH2));
                 }
             }
+
+            databaseH2.printTable();
         }
     }
 
@@ -61,22 +70,30 @@ public class ProjectApplication {
         return expression;
     }
 
-    public static String resultOfRightSide(String rightSideOfExpression, Properties properties, FileWriter fileWriter, String resultOfLeftSide) throws IOException {
+    public static String resultOfRightSide(
+            String rightSideOfExpression,
+            Properties properties,
+            FileWriter fileWriter,
+            String resultOfLeftSide,
+            DatabaseH2 databaseH2) throws IOException {
         if (rightSideOfExpression.contains("M+")) {
             properties.setProperty(
                     MEM_VALUE,
                     String.valueOf(Double.parseDouble(properties.getProperty(MEM_VALUE)) + Double.parseDouble(resultOfLeftSide)));
             fileWriter.append(String.format(MEM_FILE_FORMAT, properties.getProperty(MEM_VALUE)));
+            databaseH2.insertRecord(properties.getProperty(MEM_VALUE));
             return rightSideOfExpression.replace("M+", properties.getProperty(MEM_VALUE));
         } else if (rightSideOfExpression.contains("M-")) {
             properties.setProperty(
                     MEM_VALUE,
                     String.valueOf(Double.parseDouble(properties.getProperty(MEM_VALUE)) - Double.parseDouble(resultOfLeftSide)));
             fileWriter.append(String.format(MEM_FILE_FORMAT, properties.getProperty(MEM_VALUE)));
+            databaseH2.insertRecord(properties.getProperty(MEM_VALUE));
             return rightSideOfExpression.replace("M-", properties.getProperty(MEM_VALUE));
         } else if (rightSideOfExpression.contains("M")) {
             properties.setProperty(MEM_VALUE, resultOfLeftSide);
             fileWriter.append(String.format(MEM_FILE_FORMAT, properties.getProperty(MEM_VALUE)));
+            databaseH2.insertRecord(properties.getProperty(MEM_VALUE));
             return rightSideOfExpression.replace("M", properties.getProperty(MEM_VALUE));
         } else {
             return rightSideOfExpression.replace("?", resultOfLeftSide);
