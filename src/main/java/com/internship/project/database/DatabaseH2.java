@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DatabaseH2 {
     public final String JDBC_DRIVER = "org.h2.Driver";
-    public final String DB_URL = "jdbc:h2:tcp://localhost/~/test";
+    public final String DB_URL = "jdbc:h2:~/test";
     public final String USER = "ramadan";
     public final String PASS = "123456";
     public Integer ID = 0;
@@ -23,7 +23,7 @@ public class DatabaseH2 {
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
                     int id = rs.getInt("id");
-                    int M = rs.getInt("M");
+                    double M = rs.getDouble("M");
 
                     System.out.print("ID: " + id);
                     System.out.println(" | M: " + M);
@@ -51,7 +51,7 @@ public class DatabaseH2 {
     public void createTable() {
         databaseUpdate("CREATE TABLE   Calculator_Memory " +
                 "(id INTEGER not NULL, " +
-                " M INTEGER, " +
+                " M DOUBLE, " +
                 " PRIMARY KEY ( id ))");
     }
 
