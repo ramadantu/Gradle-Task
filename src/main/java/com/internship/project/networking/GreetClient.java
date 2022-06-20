@@ -16,19 +16,34 @@ public class GreetClient {
     }
 
     public String sendData(String data) throws IOException {
-        char type = 's';
-        byte[] dataInBytes = data.getBytes(StandardCharsets.UTF_8);
 
-        out.writeChar(type);
-        out.writeInt(dataInBytes.length);
-        out.write(dataInBytes);
+        String firstOperand = data.substring(
+                data.indexOf(data.charAt(0)), data.indexOf(data.charAt(1)));
+        String operator = data.substring(
+                data.indexOf(data.charAt(2)), data.indexOf(data.charAt(4)));
+        String secondOperand = data.substring(
+                data.indexOf(data.charAt(4)));
+
+        char typeOperand = 'i';
+        byte[] firstOperandInBytes = firstOperand.getBytes(StandardCharsets.UTF_8);
+
+        out.writeChar(typeOperand);
+        out.writeInt(firstOperandInBytes.length);
+        out.write(firstOperandInBytes);
+
+        char typeOperator = 'c';
+        byte[] operatorInBytes = operator.getBytes(StandardCharsets.UTF_8);
+
+        out.writeChar(typeOperator);
+        out.writeInt(operatorInBytes.length);
+        out.write(operatorInBytes);
+
+        byte[] secondOperandInBytes = secondOperand.getBytes(StandardCharsets.UTF_8);
+
+        out.writeChar(typeOperand);
+        out.writeInt(secondOperandInBytes.length);
+        out.write(secondOperandInBytes);
 
         return in.readLine();
-    }
-
-    public void stopConnection() throws IOException {
-        in.close();
-        out.close();
-        clientSocket.close();
     }
 }
