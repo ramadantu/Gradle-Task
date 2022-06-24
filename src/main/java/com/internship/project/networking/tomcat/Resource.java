@@ -7,11 +7,10 @@ import javax.ws.rs.*;
 @Path("/calculations")
 public class Resource {
     @POST
-    @Path("/{expression}")
+    @Consumes("text/plain")
     @Produces("text/plain")
-    public String calculate(@PathParam("expression") String expression) {
+    public String calculate(String expression) {
         ArithmeticOperations calculator = new ArithmeticOperations();
-        String result = calculator.apply(expression);
-        return "result = " + result;
+        return calculator.apply(expression);
     }
 }
