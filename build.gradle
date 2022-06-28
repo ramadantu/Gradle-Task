@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'war'
 }
 
 group 'com.internship'
@@ -20,7 +21,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     implementation 'net.objecthunter:exp4j:0.4.8'
-    implementation 'com.h2database:h2:2.1.212'
+    implementation('org.glassfish.jersey.containers:jersey-container-servlet:2.34')
+    implementation('org.glassfish.jersey.media:jersey-media-json-jackson:2.34')
+    implementation('org.glassfish.jersey.inject:jersey-cdi2-se:2.34')
+    implementation('org.jboss.weld.se:weld-se-core:3.1.8.Final')
 }
 
 jar {
